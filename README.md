@@ -12,9 +12,10 @@ The remote is a serial device, it talks @ baud 4800,8N1. CTS line is avaliable a
 ![PSP 120 internals pinout](https://github.com/amateusz/psp-120-remote-tool/blob/main/psp_120_remote_pinout.png)
 
 where:
-`D-` - digital ground
 
-`A-` - analog ground
+`D-`  - digital ground
+
+`A-`  - analog ground
 
 `L/R` - left or right audio channel, idk
 ___
