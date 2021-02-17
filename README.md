@@ -1,4 +1,4 @@
-# psp-remote-tool
+# psp-120-remote-tool
 Python tool to talk to PSP-120 remote. 
 It inits the remote, maintains communication, and receives any key presses/releases. Also, it sends common multimedia scancodes, to control your playback.
 
