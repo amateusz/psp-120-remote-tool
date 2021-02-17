@@ -4,9 +4,6 @@ import sched, time
 from datetime import datetime as dt
 import keyboard
 
-scheduler = sched.scheduler(time.time, time.sleep)
-
-
 remote = Serial('/dev/ttyUSB0', baudrate=4800)
 remote.timeout = .30 # 30 ms is plenty to recv the packet
 
@@ -21,6 +18,7 @@ PACKET_START = b'\xFD'
 PACKET_END = b'\xFE'
 ACK = {0: b'\xFA',
        1: b'\xFB'}
+
 COMMANDS = {'first_ack' : b'\x80',
             'second_ack' : b'\x83',
             'buttons_84' : b'\x84',
@@ -28,6 +26,7 @@ COMMANDS = {'first_ack' : b'\x80',
             'psp_03': b'\x03',
             'psp_02': b'\x02'}
 
+# name: [bitmask, linux scancode]
 BUTTONS = {'⏯️'   : [0b1,164],
            '⏭️'   : [0b100,163],
            '⏮️'   : [0b1000,165],
