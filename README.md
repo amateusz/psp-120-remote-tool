@@ -8,22 +8,28 @@ _TODO: branch for RPi pico._
 ## hardware
 The remote is a serial device, it talks @ baud 4800,8N1. CTS line is avaliable and it is asserted when ⏯️ button is pressed.
 The remote is 2V5 device, so make sure to level-convert data lines. I guess it should be fine with 3V3. I used cheap MOSFET level-converter and silicon diode to drop 3V3→2V6 which is close enough.
-The remote needs expects an answer within first few seconds after power up, so we need to have control over its power line. I'm using separate P-channel MOSFET, but flow control lines of FT232 adapter should do.
+The remote expects an answer within first few seconds after power up, so we need to have control over its power line. I'm using separate P-channel MOSFET, but flow control lines of e.g. FT232 adapter should be enough.
 
 ## protocol
 I've done initial coding with help of this guide: http://mc.pp.se/psp/phones.xhtml, but it proved to be missing.
-Current implementation is based on sniffing the PSP-1000 ↔ PSP-120 traffic.
+Current implementation is based on sniffing the PSP-1000 ↔ PSP-120 traffic. The dump is included in the repo.
 
 Initial communication (first 2 packets)
 ![psp-remote-initial-comms](https://user-images.githubusercontent.com/9356928/108277141-3b9c1b80-7179-11eb-900e-49e31ea08a73.png)
 
-It goes like this:
+Every packet needs to be "answered" and "ack"ed.
+
+### The communicatoin goes like this:
 - PSP provides power to the remote
-- remote sends some 2 commands, expects an ack/answer for each of them
+- remote sends some 2 commands
+  - PSP acks each one
 - remote sends initial button state
+  - PSP acks
 from now on
 - the PSP sends a "keepalive" packet every 1 second
-- remote sends any keypresses
+  - remote acks
+- on keypress/release remote sends key packet
+  - PSP acks
 
 Seems like the LSB of the command byte is some kind of checksum, as command bytes `0x02`/`0x03` are used interchangeably, same goes for `0x84`/`0x85`. Current implementation treats them as distinct commands though.
 
