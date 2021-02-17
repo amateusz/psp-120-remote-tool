@@ -7,6 +7,19 @@ _TODO: branch for RPi pico._
 
 ## hardware
 The remote is a serial device, it talks @ baud 4800,8N1. CTS line is avaliable and it is asserted when ⏯️ button is pressed.
+
+### pinout
+![PSP 120 internals pinout](https://github.com/amateusz/psp-120-remote-tool/blob/main/psp_120_remote_pinout.png)
+
+where:
+`D-` - digital ground
+
+`A-` - analog ground
+
+`L/R` - left or right audio channel, idk
+___
+
+
 The remote is 2V5 device, so make sure to level-convert data lines. I guess it should be fine with 3V3. I used cheap MOSFET level-converter and silicon diode to drop 3V3→2V6 which is close enough.
 The remote expects an answer within first few seconds after power up, so we need to have control over its power line. I'm using separate P-channel MOSFET, but flow control lines of e.g. FT232 adapter should be enough.
 
