@@ -14,6 +14,9 @@ The remote needs expects an answer within first few seconds after power up, so w
 I've done initial coding with help of this guide: http://mc.pp.se/psp/phones.xhtml, but it proved to be missing.
 Current implementation is based on sniffing the PSP-1000 ↔ PSP-120 traffic.
 
+Initial communication (first 2 packets)
+![psp-remote-initial-comms](https://user-images.githubusercontent.com/9356928/108277141-3b9c1b80-7179-11eb-900e-49e31ea08a73.png)
+
 It goes like this:
 - PSP provides power to the remote
 - remote sends some 2 commands, expects an ack/answer for each of them
@@ -27,3 +30,7 @@ Seems like the LSB of the command byte is some kind of checksum, as command byte
 ## usage
 `sudo python3 psp-120-remote-tool.py`
 sudo is required due to module `keyboard` to simulate keypresses
+
+---
+
+There is a Pulseview dump of the communication between the remote and PSP which I based this code on
